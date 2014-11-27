@@ -32,26 +32,37 @@ function field_index_form($form, &$form_state, $field_index, $op = 'edit') {
       '#description'   => t('A unique machine-readable name for this currency. It must only contain lowercase letters, numbers, and underscores.'),
   );
 
+  // @TODO: On change, ajax load bundles
   $form['entity_type'] = array(
       '#type'          => 'select',
       '#title'         => t('Entity type'),
-      '#options'       => array(),
+      '#options'       => array(), // @TODO: List fieldable entity types, SQL storage
       '#default_value' => isset($field_index->entity_type) ? $field_index->entity_type : '',
   );
 
+  // @TODO: On change, ajax load fields
   $form['bundle'] = array(
       '#type'          => 'select',
       '#title'         => t('Bundle'),
-      '#options'       => array(),
+      '#options'       => array(), // @TODO: Bundle of entity if it's available
       '#default_value' => isset($field_index->bundle) ? $field_index->bundle : '',
   );
 
-//  $form['fields'] = array(
-//      '#type'          => 'select',
-//      '#title'         => t('Fields'),
-//      '#options'       => array(),
-//      '#default_value' => isset($field_index->fields) ? $field_index->bundle : '',
-//  );
+  // @TODO: On change, ajax load columns
+  $form['field'] = array(
+      '#type'          => 'select',
+      '#title'         => t('Field'),
+      '#options'       => array(), // @TODO: List of fields
+      '#default_value' => isset($field_index->field) ? $field_index->field : '',
+  );
+
+  $form['column_names'] = array(
+      '#type'          => 'select', // @TODO: checkboxes if length is greater then 5
+      '#multiple'      => TRUE,
+      '#title'         => t('Fields'),
+      '#options'       => array(), // @TODO: List columns
+      '#default_value' => isset($field_index->column_names) ? $field_index->column_names : array(),
+  );
 
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Save field index'), '#weight' => 40);
