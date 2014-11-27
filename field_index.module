@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * Implements hook_permisison().
+ */
+function field_index_permission() {
+  return array(
+      'manage field indexes' => array(
+          'title' => 'Manage field indexes',
+      ),
+  );
+}
+
+/**
+ * Implements hook_menu()
+ */
+function field_index_menu() {
+  $items = array();
+
+  return $items;
+}

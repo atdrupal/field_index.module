@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * Implements hook_schema()/
+ */
+function field_index_schema() {
+  $schema = array();
+
+  $schema['field_index'] = array(
+      'description' => 'Store field indexes.',
+      'fields'      => array(
+          'id'          => array(),
+          'name'        => array('type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'The machine-readable name of this quiz type.'),
+          'label'       => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => '', 'description' => 'The human-readable name of this entity.'),
+          'published'   => array('type' => 'int', 'not null' => TRUE, 'default' => 1, 'description' => 'Boolean indicating whether the entity is published.'),
+          'status'      => array('type' => 'int', 'not null' => TRUE, 'default' => 0x01, 'size' => 'tiny', 'description' => 'The exportable status of the entity.'),
+          'entity_type' => array('type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'default' => '', 'description' => 'The entity type on where we create index.'),
+          'fields'      => array('type' => 'text', 'not null' => FALSE, 'size' => 'big', 'serialize' => TRUE, 'description' => 'A serialized array of field names to be indexed.'),
+      ),
+      'primary key' => array('id'),
+      'unique keys' => array(
+          'unique_name' => array('name')
+      ),
+      'indexes'     => array(
+          'published'   => array('published'),
+          'status'      => array('status'),
+          'entity_type' => array('entity_type'),
+      ),
+  );
+
+  return $schema;
+}

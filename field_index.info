@@ -1,0 +1,3 @@
+name = Field index
+description = Provide UI to create indexes for fields.
+core = 7.x
