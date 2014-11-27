@@ -66,7 +66,8 @@ class FieldIndex extends Entity {
   public $status;
   public $entity_type;
   public $bundle;
-  public $fields;
+  public $field;
+  public $column_names;
 
   /**
    * Returns whether the quiz type is locked, thus may not be deleted or renamed.
