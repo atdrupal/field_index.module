@@ -12,10 +12,70 @@ function field_index_permission() {
 }
 
 /**
- * Implements hook_menu()
+ * Implements hook_entity_info()
  */
-function field_index_menu() {
-  $items = array();
+function field_index_entity_info() {
+  $info = array();
 
-  return $items;
+  $info['field_index'] = array('label'            => t('!quiz type', array('!quiz' => QUIZ_NAME)),
+      'plural label'     => t('Field index'),
+      'description'      => t('Field index'),
+      'entity class'     => 'FieldIndex',
+      'controller class' => 'EntityAPIControllerExportable',
+      'base table'       => 'field_index',
+      'fieldable'        => FALSE,
+      'exportable'       => TRUE,
+      'entity keys'      => array('id' => 'id', 'name' => 'name', 'label' => 'label'),
+      'access callback'  => 'field_index_access_callback',
+      'module'           => 'quizz',
+      'admin ui'         => array(
+          'path' => 'admin/structure/field-indexes',
+          'file' => 'field_index.pages.inc',
+      ),
+  );
+
+  return $info;
+}
+
+/**
+ * Load field index entity by name.
+ * @param string $name
+ * @return FieldIndex
+ */
+function field_index_load($name) {
+  $indexes = entity_load_multiple_by_name('field_index', array($name));
+  return isset($indexes[$name]) ? $indexes[$name] : null;
+}
+
+/**
+ * Access callback for field_index entity.
+ * @param string $op
+ * @param FieldIndex $field_index
+ * @param stdClass $account
+ */
+function field_index_access_callback($op, $field_index = NULL, $account = NULL) {
+  return user_access('manage field indexes', $account);
+}
+
+class FieldIndex extends Entity {
+
+  public $id;
+  public $name;
+  public $label;
+  public $published;
+  public $status;
+  public $entity_type;
+  public $bundle;
+  public $fields;
+
+  /**
+   * Returns whether the quiz type is locked, thus may not be deleted or renamed.
+   *
+   * Quiz types provided in code are automatically treated as locked, as well
+   * as any fixed quiz type.
+   */
+  public function isLocked() {
+    return isset($this->status) && empty($this->is_new) && (($this->status & ENTITY_IN_CODE) || ($this->status & ENTITY_FIXED));
+  }
+
 }
