@@ -23,3 +23,7 @@ class FieldIndex extends Entity {
   }
 
 }
+
+class FieldIndexController extends EntityAPIControllerExportable {
+
+}

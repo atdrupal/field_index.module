@@ -21,7 +21,7 @@ function field_index_entity_info() {
       'plural label'     => t('Field index'),
       'description'      => t('Field index'),
       'entity class'     => 'FieldIndex',
-      'controller class' => 'EntityAPIControllerExportable',
+      'controller class' => 'FieldIndexController',
       'base table'       => 'field_index',
       'fieldable'        => FALSE,
       'exportable'       => TRUE,
@@ -35,6 +35,14 @@ function field_index_entity_info() {
   );
 
   return $info;
+}
+
+/**
+ * Get controller for field_index entity.
+ * @return FieldIndexController
+ */
+function field_index_controller() {
+  return entity_get_controller('field_index');
 }
 
 /**
