@@ -17,8 +17,9 @@ function field_index_permission() {
 function field_index_entity_info() {
   $info = array();
 
-  $info['field_index'] = array('label'            => t('!quiz type', array('!quiz' => QUIZ_NAME)),
-      'plural label'     => t('Field index'),
+  $info['field_index'] = array(
+      'label'            => t('Field index'),
+      'plural label'     => t('Field indexes'),
       'description'      => t('Field index'),
       'entity class'     => 'FieldIndex',
       'controller class' => 'FieldIndexController',
@@ -27,7 +28,7 @@ function field_index_entity_info() {
       'exportable'       => TRUE,
       'entity keys'      => array('id' => 'id', 'name' => 'name', 'label' => 'label'),
       'access callback'  => 'field_index_access_callback',
-      'module'           => 'quizz',
+      'module'           => 'field_index',
       'admin ui'         => array(
           'path' => 'admin/structure/field-indexes',
           'file' => 'field_index.pages.inc',

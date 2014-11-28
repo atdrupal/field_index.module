@@ -26,4 +26,37 @@ class FieldIndex extends Entity {
 
 class FieldIndexController extends EntityAPIControllerExportable {
 
+  /**
+   * Get entity types which support fields, use SQL storage
+   */
+  public function getEntityTypes() {
+    $entity_info = array();
+
+    foreach (entity_get_info() as $type_name => $entity_info) {
+      if (empty($entity_info['fieldable'])) {
+        continue;
+      }
+
+      if ($this->isSQLEntityType($type_name)) {
+        $entity_info[$type_name] = $entity_info;
+      }
+    }
+
+    return $entity_info;
+  }
+
+  protected function isSQLEntityType($type_name) {
+    foreach (field_info_instances($type_name) as $field_instances) {
+      if (!empty($field_instances)) {
+        foreach (array_keys($field_instances) as $field_name) {
+          $field_info = field_info_field($field_name);
+          if ('field_sql_storage' === $field_info['storage']['module']) {
+            return TRUE;
+          }
+        }
+      }
+    }
+    return FALSE;
+  }
+
 }

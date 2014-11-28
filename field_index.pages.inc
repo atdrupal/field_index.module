@@ -33,10 +33,15 @@ function field_index_form($form, &$form_state, $field_index, $op = 'edit') {
   );
 
   // @TODO: On change, ajax load bundles
+  $entity_type_options = array();
+  foreach (field_index_controller() as $type_name => $type_info) {
+    $entity_type_options[$type_name] = $type_info['label'];
+  }
+
   $form['entity_type'] = array(
       '#type'          => 'select',
       '#title'         => t('Entity type'),
-      '#options'       => array(), // @TODO: List fieldable entity types, SQL storage
+      '#options'       => $entity_type_options,
       '#default_value' => isset($field_index->entity_type) ? $field_index->entity_type : '',
   );
 
