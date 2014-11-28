@@ -9,7 +9,7 @@ function field_index_schema() {
   $schema['field_index'] = array(
       'description' => 'Store field indexes.',
       'fields'      => array(
-          'id'           => array(),
+          'id'           => array('type' => 'serial', 'not null' => TRUE, 'description' => 'Primary Key: Unique ID.'),
           'name'         => array('type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'The machine-readable name of this quiz type.'),
           'label'        => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => '', 'description' => 'The human-readable name of this entity.'),
           'published'    => array('type' => 'int', 'not null' => TRUE, 'default' => 1, 'description' => 'Boolean indicating whether the entity is published.'),
