@@ -3,3 +3,5 @@ description = Provide UI to create indexes for fields.
 core = 7.x
 
 files[] = field_index.inc
+
+dependencies[] = entity
