@@ -85,4 +85,15 @@ class FieldIndexController extends EntityAPIControllerExportable {
 
     return $return;
   }
+
+  public function delete($ids, DatabaseTransaction $transaction = NULL) {
+    foreach (entity_load($this->entityType, $ids) as $field_index) {
+      $index_name = 'field_index__' . str_replace(' ', '_', strtolower($field_index->name));
+      if (db_index_exists($table, $index_name)) {
+        db_drop_index($table, $index_name);
+      }
+    }
+    parent::delete($ids, $transaction);
+  }
+
 }
