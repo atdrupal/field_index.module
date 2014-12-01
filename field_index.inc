@@ -67,21 +67,25 @@ class FieldIndexController extends EntityAPIControllerExportable {
     $return = parent::save($field_index, $transaction);
 
     // Find table
-    $field = field_info_field($field_index->field_name);
-    $table = _field_sql_storage_tablename($field);
+    if ($field = field_info_field($field_index->field_name)) {
+      $table = _field_sql_storage_tablename($field);
 
-    // Find columns
-    $columns = array();
-    foreach ($field_index->column_names as $column_name) {
-      $columns[] = _field_sql_storage_columnname($field_index->field_name, $column_name);
-    }
+      // Find columns
+      $columns = array();
+      foreach ($field_index->column_names as $column_name) {
+        $columns[] = _field_sql_storage_columnname($field_index->field_name, $column_name);
+      }
 
-    // Create index
-    $index_name = 'field_index__' . str_replace(' ', '_', strtolower($field_index->name));
-    if (db_index_exists($table, $index_name)) {
-      db_drop_index($table, $index_name);
+      // Create index
+      $index_name = 'field_index__' . str_replace(' ', '_', strtolower($field_index->name));
+      if (db_index_exists($table, $index_name)) {
+        db_drop_index($table, $index_name);
+      }
+
+      if ($field_index->published) {
+        db_add_index($table, $index_name, $columns);
+      }
     }
-    db_add_index($table, $index_name, $columns);
 
     return $return;
   }
