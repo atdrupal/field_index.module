@@ -65,3 +65,16 @@ function field_index_load($name) {
 function field_index_access_callback($op, $field_index = NULL, $account = NULL) {
   return user_access('manage field indexes', $account);
 }
+
+/**
+ * Implements hook_field_delete_field()
+ */
+function field_index_field_delete_field($field) {
+  $conditions = array('field_name' => $field['field_name'], 'published' => 1);
+  if ($field_indexes = entity_load('field_index', FALSE, $conditions)) {
+    foreach ($field_indexes as $field_index) {
+      $field_index->published = 0;
+      $field_index->save();
+    }
+  }
+}
