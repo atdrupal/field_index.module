@@ -38,6 +38,12 @@ function field_index_form($form, &$form_state, $field_index, $op = 'edit') {
       ),
   );
 
+  $form['published'] = array(
+      '#type'          => 'checkbox',
+      '#title'         => t('Published'),
+      '#default_value' => isset($field_index->published) ? $field_index->published : 0,
+  );
+
   $form['index_info'] = array(
       '#prefix' => '<div id="field-index-info-wrapper">',
       '#suffix' => '</div>',
