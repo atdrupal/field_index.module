@@ -9,7 +9,7 @@ class FieldIndex extends Entity {
   public $status;
   public $entity_type;
   public $bundle;
-  public $field;
+  public $field_name;
   public $column_names;
 
   /**
@@ -30,7 +30,7 @@ class FieldIndexController extends EntityAPIControllerExportable {
    * Get entity types which support fields, use SQL storage
    */
   public function getEntityTypes() {
-    $entity_info = array();
+    $info = array();
 
     foreach (entity_get_info() as $type_name => $entity_info) {
       if (empty($entity_info['fieldable'])) {
@@ -38,11 +38,11 @@ class FieldIndexController extends EntityAPIControllerExportable {
       }
 
       if ($this->isSQLEntityType($type_name)) {
-        $entity_info[$type_name] = $entity_info;
+        $info[$type_name] = $entity_info;
       }
     }
 
-    return $entity_info;
+    return $info;
   }
 
   protected function isSQLEntityType($type_name) {
