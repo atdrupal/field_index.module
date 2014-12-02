@@ -113,7 +113,8 @@ function field_index_form($form, &$form_state, $field_index, $op = 'edit') {
   // columns
   if (!empty($form['index_info']['field_name']['#default_value'])) {
     $column_options = array();
-    foreach (field_info_field($form['index_info']['field_name']['#default_value'])['columns'] as $column_name => $column_info) {
+    $field_info = field_info_field($form['index_info']['field_name']['#default_value']);
+    foreach ($field_info['columns'] as $column_name => $column_info) {
       $column_options[$column_name] = ucfirst($column_name) . ' (' . $column_info['type'] . ')';
     }
 
