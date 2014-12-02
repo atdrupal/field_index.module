@@ -13,6 +13,7 @@ function field_index_schema() {
           'name'         => array('type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'The machine-readable name of this quiz type.'),
           'label'        => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => '', 'description' => 'The human-readable name of this entity.'),
           'published'    => array('type' => 'int', 'not null' => TRUE, 'default' => 1, 'description' => 'Boolean indicating whether the entity is published.'),
+          'module'       => array('type' => 'varchar', 'length' => 255, 'not null' => FALSE, 'description' => 'The name of the providing module if the entity has been defined in code.'),
           'status'       => array('type' => 'int', 'not null' => TRUE, 'default' => 0x01, 'size' => 'tiny', 'description' => 'The exportable status of the entity.'),
           'entity_type'  => array('type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'default' => '', 'description' => 'The entity type on where we create index.'),
           'bundle'       => array('type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'default' => '', 'description' => 'The entity bundle on where we create index.'),
@@ -31,4 +32,11 @@ function field_index_schema() {
   );
 
   return $schema;
+}
+
+/**
+ * Add missing {field_index}.module
+ */
+function field_index_update_7001() {
+  db_add_field('field_index', 'module', array('type' => 'varchar', 'length' => 255, 'not null' => FALSE, 'description' => 'The name of the providing module if the entity has been defined in code.'));
 }
