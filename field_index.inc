@@ -22,6 +22,11 @@ class FieldIndex extends Entity {
     return isset($this->status) && empty($this->is_new) && (($this->status & ENTITY_IN_CODE) || ($this->status & ENTITY_FIXED));
   }
 
+  public function getTable() {
+    $field = field_info_field($this->field_name);
+    return _field_sql_storage_tablename($field);
+  }
+
 }
 
 class FieldIndexController extends EntityAPIControllerExportable {
@@ -68,7 +73,7 @@ class FieldIndexController extends EntityAPIControllerExportable {
 
     // Find table
     if ($field = field_info_field($field_index->field_name)) {
-      $table = _field_sql_storage_tablename($field);
+      $table = $field_index->getTable();
 
       // Find columns
       $columns = array();
@@ -92,6 +97,7 @@ class FieldIndexController extends EntityAPIControllerExportable {
 
   public function delete($ids, DatabaseTransaction $transaction = NULL) {
     foreach (entity_load($this->entityType, $ids) as $field_index) {
+      $table = $field_index->getTable();
       $index_name = 'field_index__' . str_replace(' ', '_', strtolower($field_index->name));
       if (db_index_exists($table, $index_name)) {
         db_drop_index($table, $index_name);

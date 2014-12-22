@@ -58,7 +58,11 @@ class FieldIndexTestCase extends DrupalWebTestCase {
     $field = field_info_field('node_test_text');
     $table = _field_sql_storage_tablename($field);
     $index_name = 'field_index__' . str_replace(' ', '_', strtolower($field_index->name));
-    $this->assertTrue(db_index_exists($table, $index_name));
+    $this->assertTrue(db_index_exists($table, $index_name), 'Index is created.');
+
+    // Drop entity, index should be removed too.
+    $field_index->delete();
+    $this->assertFalse(db_index_exists($table, $index_name), 'Index is dropped');
   }
 
 }
