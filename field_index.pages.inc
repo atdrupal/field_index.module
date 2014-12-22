@@ -18,7 +18,7 @@ function field_index_form($form, &$form_state, $field_index, $op = 'edit') {
       '#type'          => 'textfield',
       '#title'         => t('Label'),
       '#default_value' => isset($field_index->label) ? $field_index->label : '',
-      '#description'   => t('The human-readable name of this currency.'),
+      '#description'   => t('The human-readable name of this field-index.'),
       '#required'      => TRUE,
       '#size'          => 30,
   );
@@ -33,7 +33,7 @@ function field_index_form($form, &$form_state, $field_index, $op = 'edit') {
           'exists' => 'field_index_load',
           'source' => array('label')
       ),
-      '#description'   => t('A unique machine-readable name for this currency. It must only contain lowercase letters, numbers, and underscores.'),
+      '#description'   => t('A unique machine-readable name for this field-index. It must only contain lowercase letters, numbers, and underscores.'),
       '#ajax'          => array(
       ),
   );
